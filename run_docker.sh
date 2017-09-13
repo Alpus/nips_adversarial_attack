@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-nvidia-docker run -it \
+nvidia-docker run \
     -v /home/alpus/Work/kaggle/attack/sample/input_dir:/input_images \
     -v /home/alpus/Work/kaggle/attack/sample/output_dir:/output_images \
     -v /home/alpus/Work/kaggle/attack/sample/submit:/code \

@@ -16,7 +16,7 @@ tf.flags.DEFINE_integer(
     'max_epsilon', 15, 'How strong app can change the image')
 
 tf.flags.DEFINE_integer(
-    'batch_size', 2, 'How many images process at one time.')
+    'batch_size', 10, 'How many images process at one time.')
 
 tf.flags.DEFINE_string(
     'checkpoint_path', 'weights/adv_inception_v3.ckpt', 'Path to checkpoint for inception network.')
@@ -76,7 +76,7 @@ def main(_):
     for names_batch, images_batch, targets_batch, real_len in get_batches(FLAGS.input_dir, FLAGS.batch_size):
         images = pm.inference(
             images_batch, targets_batch,
-            max_perturbation=FLAGS.max_epsilon, alpha=1, start_lr=0.05, end_lr=0.001, n=20
+            max_perturbation=FLAGS.max_epsilon, alpha=1, start_lr=0.05, end_lr=0.001, n=10
         )
         save_images(FLAGS.output_dir, names_batch, images, real_len)
 

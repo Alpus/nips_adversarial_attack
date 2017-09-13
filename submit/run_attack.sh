@@ -18,5 +18,6 @@ python3 run_attack.py \
   --input_dir="${INPUT_DIR}" \
   --output_dir="${OUTPUT_DIR}" \
   --max_epsilon="${MAX_EPSILON}" \
-  --checkpoint_path=weights/adv_inception_v3.ckpt
+  --checkpoint_path=weights/adv_inception_v3.ckpt \
   --batch_size=16
+
