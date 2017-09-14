@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-zip -r submit.zip submit -x *__pycache__* -x *.swp
+cd submit
+zip -r ../submit.zip ./* -x "*__pycache__*" -x *.swp
 
