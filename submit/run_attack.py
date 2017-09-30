@@ -76,7 +76,7 @@ def main(_):
     for names_batch, images_batch, targets_batch, real_len in get_batches(FLAGS.input_dir, FLAGS.batch_size):
         images = pm.inference(
             images_batch, targets_batch,
-            max_perturbation=FLAGS.max_epsilon, alpha=1, start_lr=0.05, end_lr=0.001, n=10
+            max_perturbation=FLAGS.max_epsilon, alpha=1, start_lr=0.1, end_lr=0.0005, n=50
         )
         save_images(FLAGS.output_dir, names_batch, images, real_len)
 
