@@ -23,43 +23,38 @@ tf.flags.DEFINE_string(
 
 FLAGS = tf.flags.FLAGS
 
+TARGET = 42
+
 
 def get_batches(folder_path, batch_size):
     images_batch = []
     targets_batch = []
     names_batch = []
 
-    with open(os.path.join(folder_path, 'target_class.csv'), 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            if len(row) == 0:
-                break
+    for file_name in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, file_name)
 
-            file_name, target = row[0], int(row[1])
+        names_batch.append(file_name)
+        images_batch.append(io.imread(file_path))
+        targets_batch.append(TARGET)
 
-            file_path = os.path.join(folder_path, file_name)
+        if len(images_batch) == batch_size:
+            yield names_batch, images_batch, targets_batch, batch_size
+            names_batch, images_batch, targets_batch = [], [], []
 
-            names_batch.append(file_name)
-            images_batch.append(io.imread(file_path))
-            targets_batch.append(target)
+    if len(images_batch) > 0:
+        last_name = names_batch[-1]
+        last_image = images_batch[-1]
+        last_target = targets_batch[-1]
 
-            if len(images_batch) == batch_size:
-                yield names_batch, images_batch, targets_batch, batch_size
-                names_batch, images_batch, targets_batch = [], [], []
+        enter_len = len(names_batch)
+        extra_len = batch_size - enter_len
 
-        if len(images_batch) > 0:
-            last_name = names_batch[-1]
-            last_image = images_batch[-1]
-            last_target = targets_batch[-1]
+        names_batch.extend([last_name] * extra_len)
+        images_batch.extend([last_image] * extra_len)
+        targets_batch.extend([last_target] * extra_len)
 
-            enter_len = len(names_batch)
-            extra_len = batch_size - enter_len
-
-            names_batch.extend([last_name] * extra_len)
-            images_batch.extend([last_image] * extra_len)
-            targets_batch.extend([last_target] * extra_len)
-
-            yield names_batch, images_batch, targets_batch, enter_len
+        yield names_batch, images_batch, targets_batch, enter_len
 
 
 def save_images(folder_path, names, images, real_len):

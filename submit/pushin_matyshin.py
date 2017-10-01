@@ -25,8 +25,8 @@ class PushinMatyshin:
             self.min_real_image = tf.maximum(0., self.real_image - self.max_perturbation)
             self.max_real_image = tf.minimum(1., self.real_image + self.max_perturbation)
 
-            self.fake_image = self.min_real_image + (self.max_real_image - self.min_real_image) * (
-            tf.tanh(self.fake_image_subst) + 1) / 2
+            self.fake_image = self.min_real_image + \
+                              (self.max_real_image - self.min_real_image) * (tf.tanh(self.fake_image_subst) + 1) / 2
 
             with slim.arg_scope(inception.inception_v3_arg_scope()):
                 self.fake_logits, self.inception_end_points = inception.inception_v3(

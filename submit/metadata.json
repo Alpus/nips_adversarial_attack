@@ -1,5 +1,5 @@
 {
-  "type": "targeted_attack",
+  "type": "attack",
   "container": "alpus/tensorflow_attack:cpu",
   "container_gpu": "alpus/tensorflow_attack:gpu",
   "entry_point": "run_attack.sh"
